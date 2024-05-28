@@ -105,8 +105,6 @@ const FirebaseService = {
         }
     },
 
-
-
     getApplicantDetails: async (id) => {
         try {
             const q = query(collection(firestore, "applicants"), where("applicationId", "==", id));

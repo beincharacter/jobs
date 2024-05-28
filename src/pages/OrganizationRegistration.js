@@ -24,7 +24,7 @@ const OrganizationRegistration = () => {
                 const exists = await FirebaseService.checkOrganizationExistsByEmail(email);
                 console.log({exists});
                 await setORgDetails(exists[0]);
-
+                localStorage.setItem("id", exists[0].id);
                 if (exists) {
                     navigate('/dashboard');
                 }
@@ -34,7 +34,7 @@ const OrganizationRegistration = () => {
         };
 
         checkExistingOrganization();
-    }, [navigate]);
+    }, []);
 
     const handleRegister = async () => {
         const email = localStorage.getItem("userEmail");
@@ -51,6 +51,8 @@ const OrganizationRegistration = () => {
                 setError("Organization already exists, please choose another name.");
                 return;
             }
+
+            localStorage.setItem(orgName);
             await setORgDetails({email, orgName, orgType});
             await FirebaseService.registerOrganization(email, orgName, orgType);
             navigate('/dashboard');
