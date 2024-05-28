@@ -1,0 +1,56 @@
+.register-page {        
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 1rem;
+    gap: 1rem;
+
+    h1 {
+        width: fit-content;
+    }
+
+    input {
+        padding: 1rem;
+        width: 350px;
+        background: transparent;
+        border: 1px solid black;
+        outline: none;
+        border-radius: 8px;
+
+        &:focus {
+            outline: none;
+            background-color: rgba(0, 0, 0, 0.212);
+        }
+    }
+
+    button {
+        padding: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: lightblue;
+        font-size: 16px;
+        border: none;
+        outline: none;
+
+
+        &:hover {
+            background-color: rgb(109, 187, 212);
+        }
+        
+    }
+
+    @media screen and (max-width: 400px) {
+        input {
+            width: 80%;
+        }
+
+        button {
+            font-size: 12px;
+            width: 60%;
+        }
+    }
+
+}
+

@@ -1,0 +1,22 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 1rem;
+    gap: 10px;
+
+    button {
+        padding: 1rem;
+        background-color: lightblue;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(109, 187, 212);
+        }
+    }
+}
