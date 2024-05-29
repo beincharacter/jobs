@@ -9,14 +9,13 @@ const Dashboard = () => {
     const { organization, loading } = useOrganization();
     const navigate = useNavigate();
     const [openings, setOpenings] = useState([]);
-    const [ nameLoading, isNameLoading ] = useState(false);
+    const [nameLoading, setNameLoading] = useState(false);
 
     const handleCreateApplication = () => {
         navigate('/create-application');
     };
-    
-    useEffect(() => {
 
+    useEffect(() => {
         const getOpenings = async () => {
             try {
                 const data = await FirebaseService.getOpeningsFromFirebase(organization.id);
@@ -30,7 +29,7 @@ const Dashboard = () => {
             getOpenings();
         }
     }, [organization]);
-  
+
     const handleOpeningClick = async (openingId) => {
         try {
             const applicationDetails = await FirebaseService.getApplicationDetails(openingId);
@@ -42,7 +41,8 @@ const Dashboard = () => {
     };
 
     const handleCopyId = (openingId) => {
-        navigator.clipboard.writeText(`http://localhost:3000/applicant/${openingId}`)
+        const url = `http://${process.env.REACT_APP_HOST}/application/${openingId}`;
+        navigator.clipboard.writeText(url)
             .then(() => {
                 alert("Opening ID copied to clipboard");
             })
@@ -53,7 +53,7 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard-page">
-            <h3>Welcome to your Dashboard :<span className='org-name'> {organization.orgName}</span> </h3>
+            <h3>Welcome to your Dashboard :<span className='org-name'> {organization.orgName}</span></h3>
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -71,7 +71,7 @@ const Dashboard = () => {
                                                 <span onClick={(e) => {
                                                     e.stopPropagation(); // Prevent opening click event
                                                     handleCopyId(opening.id);
-                                                }} >Link</span>
+                                                }}>Link</span>
                                             </li>
                                         ))}
                                     </ul>

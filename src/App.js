@@ -53,7 +53,7 @@ const MainContent = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path='/create-application' element={<Application />} />
                 <Route path="/application-details/:openingId" element={<ApplicationDetails />} />
-                <Route path="/applicant/:id" element={<ApplicantArea />} />
+                <Route path="/application/:id" element={<ApplicantArea />} />
             </Routes>
         </>
     );
