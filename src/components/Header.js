@@ -1,13 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { notify } from '../components/Toaster'; // Adjust the path as necessary
 import "../scss/Header.scss";
 
 export const Header = () => {
     const navigate = useNavigate();
 
-    const handleClick = () => {
+    const handleLogout = () => {
         localStorage.clear();
         navigate("/");
-    }
+    };
 
     return (
         <>
@@ -17,9 +19,10 @@ export const Header = () => {
                 <div>JOBS</div>
             </div>
             <div>
-                <button onClick={handleClick}>Logout</button>
+                <button onClick={handleLogout}>Logout</button>
+                <button onClick={notify}>Notify</button> {/* Add Notify button */}
             </div>
         </div>
         </>
-    )
-}
+    );
+};

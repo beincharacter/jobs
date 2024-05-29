@@ -9,12 +9,14 @@ import Application from './pages/Application.js';
 import ApplicationDetails from './pages/ApplicationDetails.js';
 import ApplicantArea from './pages/ApplicantArea.js';
 import { Header } from './components/Header.js';
+import { Toaster } from './components/Toaster'; // Import the Toaster component
 
 const App = () => {
     return (
         <Router>
             <OrganizationProvider>
                 <HeaderWrapper />
+                <Toaster /> {/* Add the Toaster component here */}
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/register" element={<OrganizationRegistration />} />
@@ -27,7 +29,6 @@ const App = () => {
         </Router>
     );
 };
-
 
 const HeaderWrapper = () => {
     const location = useLocation();

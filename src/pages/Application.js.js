@@ -3,6 +3,8 @@ import "../scss/Application.scss";
 import { useNavigate } from 'react-router-dom';
 import { useOrganization } from '../utils/OrganizationContext';
 import FirebaseService from '../utils/firebaseService';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const Application = () => {
     const [title, setTitle] = useState('');
@@ -65,11 +67,12 @@ const Application = () => {
                 placeholder="Location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-            />
-            <textarea
-                placeholder="Description about Application"
+            />jhyhh
+            <ReactQuill
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={setDescription}
+                placeholder="Description about Application"
+                className='asas'
             />
             <button onClick={handleSave}>Save Application</button>
         </div>
