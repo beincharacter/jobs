@@ -51,9 +51,6 @@ button {
     }
 }
 
-
-
-
 ul {
     display: flex;
     flex-direction: row;
@@ -83,4 +80,16 @@ ul {
 
 .error {
     color: red;
+}
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(131, 101, 101, 0.356);
 }

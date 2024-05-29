@@ -3,11 +3,13 @@ import "../scss/Dashboard.scss";
 import { useNavigate } from 'react-router-dom';
 import { useOrganization } from '../utils/OrganizationContext';
 import FirebaseService from '../utils/firebaseService';
+import { ColorRing } from 'react-loader-spinner';
 
 const Dashboard = () => {
     const { organization, loading } = useOrganization();
     const navigate = useNavigate();
     const [openings, setOpenings] = useState([]);
+    const [ nameLoading, isNameLoading ] = useState(false);
 
     const handleCreateApplication = () => {
         navigate('/create-application');
@@ -33,7 +35,6 @@ const Dashboard = () => {
         try {
             const applicationDetails = await FirebaseService.getApplicationDetails(openingId);
             console.log("Application details: ", applicationDetails);
-            // Navigate to a page to display application details
             navigate(`/application-details/${openingId}`, { state: { applicationDetails } });
         } catch (error) {
             console.error("Error fetching application details: ", error);

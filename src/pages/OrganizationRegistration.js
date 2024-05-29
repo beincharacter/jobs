@@ -9,10 +9,11 @@ const OrganizationRegistration = () => {
     const [orgType, setOrgType] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { setORgDetails } = useOrganization();
+    const { setORgDetails, loading, setLoading } = useOrganization();
 
     useEffect(() => {
         const checkExistingOrganization = async () => {
+            setLoading(true);
             const email = localStorage.getItem("userEmail");
 
             if (!email) {
@@ -26,9 +27,11 @@ const OrganizationRegistration = () => {
                 await setORgDetails(exists[0]);
                 localStorage.setItem("id", exists[0].id);
                 if (exists) {
+                    setLoading(false);
                     navigate('/dashboard');
                 }
             } catch (error) {
+                setLoading(false);
                 console.error("Error checking existing organization: ", error);
             }
         };
@@ -37,6 +40,8 @@ const OrganizationRegistration = () => {
     }, []);
 
     const handleRegister = async () => {
+
+        setLoading(true);
         const email = localStorage.getItem("userEmail");
 
         if (!email) {
@@ -55,8 +60,10 @@ const OrganizationRegistration = () => {
             localStorage.setItem(orgName);
             await setORgDetails({email, orgName, orgType});
             await FirebaseService.registerOrganization(email, orgName, orgType);
+            setLoading(false);
             navigate('/dashboard');
         } catch (error) {
+            setLoading(false);
             console.error("Error registering organization: ", error);
         }
     };
