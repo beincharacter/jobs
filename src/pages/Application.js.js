@@ -5,6 +5,7 @@ import { useOrganization } from '../utils/OrganizationContext';
 import FirebaseService from '../utils/firebaseService';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { toast } from 'react-toastify';
 
 const Application = () => {
     const [title, setTitle] = useState('');
@@ -19,7 +20,8 @@ const Application = () => {
     const handleSave = async () => {
         try {
             if (!title || !experience || !salaryRange || !location || !description) {
-                setError('Please fill out all fields.');
+                // setError('Please fill out all fields.');
+                toast.info("Please fill out all fields");
                 return;
             }
 
@@ -34,9 +36,11 @@ const Application = () => {
 
             await FirebaseService.createOpening(openingData);
             navigate('/dashboard');
+            toast.success("Application created");
         } catch (error) {
             console.error('Error saving application: ', error);
             setError('Error saving application. Please try again.');
+            toast.error("Application creation failed");
         }
     };
 
