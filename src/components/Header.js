@@ -26,6 +26,5 @@ export const Header = () => {
                 <button onClick={notify}>Notify</button> {/* Add Notify button */}
             </div>
         </div>
-        </>
     );
 };
