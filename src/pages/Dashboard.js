@@ -14,6 +14,7 @@ const Dashboard = () => {
     };
     
     useEffect(() => {
+
         const getOpenings = async () => {
             try {
                 const data = await FirebaseService.getOpeningsFromFirebase(organization.id);

@@ -56,25 +56,31 @@ button {
 
 ul {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     list-style: none;
     display: flex;
     gap: 10px;
     width: 100%;
-    max-width: 450px;
+    // max-width: 450px;
     
     li {
         padding: 1rem;
         flex-direction: column;
         display: flex;
         background-color: blanchedalmond;
-        width: 100%;
+        // width: 100%;
         cursor: pointer;
         border-radius: 8px;
+
 
         &:hover {
             background-color: rgb(207, 156, 80) ;
         }
         
     }
+}
+
+.error {
+    color: red;
 }
