@@ -6,5 +6,23 @@
     flex-direction: column;
     gap: 10px;
 
+    .filters {
+        .filter-label {
+          display: flex;
+          cursor: pointer;
+          background-color: lightblue;
+          transition: background-color 0.3s;
+      
+          input[type="checkbox"] {
+            display: none;
+      
+            &:checked + .filter-text {
+              background-color: #4caf50;
+              color: white;
+            }
+          }
+        }
+      }
+      
     
 }

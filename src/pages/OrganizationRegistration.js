@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "../scss/OrganizationRegistration.scss";
 import { useNavigate } from "react-router-dom";
 import FirebaseService from "../utils/firebaseService";
@@ -8,9 +8,8 @@ import { toast } from "react-toastify";
 const OrganizationRegistration = () => {
     const [orgName, setOrgName] = useState("");
     const [orgType, setOrgType] = useState("");
-    const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { setORgDetails, loading, setLoading } = useOrganization();
+    const { setORgDetails, setLoading } = useOrganization();
 
     useEffect(() => {
         const checkExistingOrganization = async () => {
@@ -77,7 +76,6 @@ const OrganizationRegistration = () => {
     return (
         <div className="register-page">
             <h1>Register Your Organization</h1>
-            {error && <p style={{color: 'red'}}>{error}</p>}
             <input
                 type="text"
                 placeholder="Organization Name"

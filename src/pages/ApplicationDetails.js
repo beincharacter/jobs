@@ -6,26 +6,23 @@ import ApplicationDetailCard from '../components/ApplicationDetailCard';
 
 const ApplicationDetails = () => {
     const location = useLocation();
-    const applicationDetail = location.state.applicationDetails; // Get opening ID from location state
+    const applicationDetail = location.state.applicationDetails;
 
     const [applicationDetails, setApplicationDetails] = useState(null);
     const [applicants, setApplicants] = useState([]);
     const [filters, setFilters] = useState({});
     const [error, setError] = useState(null);
-    const [selectedFIlters, setSelectedFilters] = useState({tech: [], experience: []})
+    const [selectedFilters, setSelectedFilters] = useState({ tech: [], experience: [] });
 
     useEffect(() => {
         const fetchApplicationDetails = async (id) => {
             try {
-                // Fetch application details based on opening ID
                 const details = await FirebaseService.getApplicationDetails(id);
                 setApplicationDetails(details);
 
-                // Fetch applicants for the opening
                 const applicantsData = await FirebaseService.getApplicantDetails(id);
                 setApplicants(applicantsData);
 
-                // Log filters
                 const filterss = getFilters(applicantsData);
                 console.log("Tech Filters:", filterss.techFilters);
                 console.log("Experience Filters:", filterss.experienceFilters);
@@ -48,13 +45,11 @@ const ApplicationDetails = () => {
         const experienceFilters = [];
 
         applicants.forEach(applicant => {
-            // Tech Stack
             const techStackLowerCase = applicant.techStack.toLowerCase();
             if (!techFilters.includes(techStackLowerCase)) {
                 techFilters.push(techStackLowerCase);
             }
 
-            // Experience
             const experienceLowerCase = applicant.experience;
             if (!experienceFilters.includes(experienceLowerCase)) {
                 experienceFilters.push(experienceLowerCase);
@@ -81,7 +76,7 @@ const ApplicationDetails = () => {
                 };
             }
         });
-        console.log({selectedFIlters});
+        console.log({ selectedFilters });
     };
 
     return (
@@ -90,55 +85,50 @@ const ApplicationDetails = () => {
 
             <h2>Applicants</h2>
             <div className='filters'>
-                {/* Render tech filters */}
                 {filters && filters.techFilters && (
-                    <div>
-                        <h3>Tech Stack</h3>
+                    <div className='flex gap-4 mb-4'>
                         {filters.techFilters.map((tech, index) => (
-                            <label key={index}>
+                            <label key={index} className='filter-label w-20 flex justify-center items-center'>
                                 <input
                                     type="checkbox"
                                     name="tech"
                                     value={tech}
                                     onChange={handleFilterChange}
                                 />
-                                {tech}
+                                <span className="filter-text flex justify-center items-center w-full h-full px-2 py-2">{tech}</span>
                             </label>
                         ))}
                     </div>
                 )}
 
-                {/* Render experience filters */}
                 {filters && filters.experienceFilters && (
-                    <div>
-                        <h3>Experience</h3>
+                    <div className='flex gap-4'>
                         {filters.experienceFilters.map((experience, index) => (
-                            <label key={index}>
+                            <label key={index} className='filter-label w-20 flex justify-center items-center'>
                                 <input
                                     type="checkbox"
                                     name="experience"
                                     value={experience}
                                     onChange={handleFilterChange}
                                 />
-                                {experience}
+                                <span className="filter-text flex justify-center items-center w-full h-full px-2 py-2">{experience}</span>
                             </label>
                         ))}
                     </div>
                 )}
 
-                {/* Render salary filters */}
                 {filters && filters.salaryFilters && (
                     <div>
                         <h3>Salary Expectation</h3>
                         {filters.salaryFilters.map((salary, index) => (
-                            <label key={index}>
+                            <label key={index} className='filter-label'>
                                 <input
                                     type="checkbox"
                                     name="salary"
                                     value={salary}
                                     onChange={handleFilterChange}
                                 />
-                                {salary}
+                                <span className="filter-text">{salary}</span>
                             </label>
                         ))}
                     </div>
@@ -151,11 +141,10 @@ const ApplicationDetails = () => {
                 <ul>
                     {applicants.length > 0 ? (
                         applicants
-                            // Apply filter logic based on the selected filters
                             .filter(applicant => {
-                                const { tech, experience } = selectedFIlters;
+                                const { tech, experience } = selectedFilters;
                                 return (!tech || tech.length === 0 || tech.includes(applicant.techStack.toLowerCase())) &&
-                                    (!experience || experience.length === 0 || experience.includes(applicant.experience))
+                                    (!experience || experience.length === 0 || experience.includes(applicant.experience));
                             })
                             .map((applicant, index) => (
                                 <li key={index}>
