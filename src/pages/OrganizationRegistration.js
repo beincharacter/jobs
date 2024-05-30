@@ -3,6 +3,7 @@ import "../scss/OrganizationRegistration.scss";
 import { useNavigate } from "react-router-dom";
 import FirebaseService from "../utils/firebaseService";
 import { useOrganization } from "../utils/OrganizationContext";
+import { toast } from "react-toastify";
 
 const OrganizationRegistration = () => {
     const [orgName, setOrgName] = useState("");
@@ -15,12 +16,12 @@ const OrganizationRegistration = () => {
         const checkExistingOrganization = async () => {
             setLoading(true);
             const email = localStorage.getItem("userEmail");
-
+    
             if (!email) {
                 console.error("No user email found.");
                 return;
             }
-
+    
             try {
                 const exists = await FirebaseService.checkOrganizationExistsByEmail(email);
                 console.log({exists});
@@ -29,15 +30,17 @@ const OrganizationRegistration = () => {
                 if (exists) {
                     setLoading(false);
                     navigate('/dashboard');
+                    toast.success("Login success");
                 }
             } catch (error) {
                 setLoading(false);
                 console.error("Error checking existing organization: ", error);
             }
         };
-
+    
         checkExistingOrganization();
     }, []);
+    
 
     const handleRegister = async () => {
 
@@ -53,15 +56,18 @@ const OrganizationRegistration = () => {
             const exists = await FirebaseService.checkOrganizationExistsByName(orgName);
 
             if (exists) {
-                setError("Organization already exists, please choose another name.");
+                setLoading(false);
+                // setError("Organization already exists, please choose another name.");
+                toast.error("Organization already exists")
                 return;
             }
 
-            localStorage.setItem(orgName);
+            localStorage.setItem("orgName", orgName);
             await setORgDetails({email, orgName, orgType});
             await FirebaseService.registerOrganization(email, orgName, orgType);
             setLoading(false);
             navigate('/dashboard');
+            toast.success("Registeration successfull");
         } catch (error) {
             setLoading(false);
             console.error("Error registering organization: ", error);
