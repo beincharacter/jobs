@@ -12,6 +12,7 @@ const ApplicationDetails = () => {
     const [applicants, setApplicants] = useState([]);
     const [filters, setFilters] = useState({});
     const [error, setError] = useState(null);
+    const [selectedFIlters, setSelectedFilters] = useState({tech: [], experience: []})
 
     useEffect(() => {
         const fetchApplicationDetails = async (id) => {
@@ -25,7 +26,7 @@ const ApplicationDetails = () => {
                 setApplicants(applicantsData);
 
                 // Log filters
-                const filterss = getFilters();
+                const filterss = getFilters(applicantsData);
                 console.log("Tech Filters:", filterss.techFilters);
                 console.log("Experience Filters:", filterss.experienceFilters);
                 console.log("Salary Filters:", filterss.salaryFilters);
@@ -42,10 +43,9 @@ const ApplicationDetails = () => {
         }
     }, [applicationDetail && applicationDetail.id]);
 
-    const getFilters = () => {
+    const getFilters = (applicants) => {
         const techFilters = [];
         const experienceFilters = [];
-        const salaryFilters = [];
 
         applicants.forEach(applicant => {
             // Tech Stack
@@ -55,32 +55,33 @@ const ApplicationDetails = () => {
             }
 
             // Experience
-            const experienceLowerCase = applicant.experience.toLowerCase();
+            const experienceLowerCase = applicant.experience;
             if (!experienceFilters.includes(experienceLowerCase)) {
                 experienceFilters.push(experienceLowerCase);
             }
-
-            // Salary Expectation
-            const salaryLowerCase = applicant.expectedSalary.toLowerCase();
-            if (!salaryFilters.includes(salaryLowerCase)) {
-                salaryFilters.push(salaryLowerCase);
-            }
         });
 
-        return { techFilters, experienceFilters, salaryFilters };
+        return { techFilters, experienceFilters };
     };
 
     const handleFilterChange = (event) => {
         const { name, value } = event.target;
 
-        // Update the selected filter in state
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            [name]: value
-        }));
-
-        // Apply filter logic here based on the selected filter value
-        // For example, you can filter applicants based on the selected tech, experience, or salary
+        setSelectedFilters(prevFilters => {
+            const isAlreadySelected = prevFilters[name].includes(value);
+            if (isAlreadySelected) {
+                return {
+                    ...prevFilters,
+                    [name]: prevFilters[name].filter(v => v !== value)
+                };
+            } else {
+                return {
+                    ...prevFilters,
+                    [name]: [...prevFilters[name], value]
+                };
+            }
+        });
+        console.log({selectedFIlters});
     };
 
     return (
@@ -152,10 +153,9 @@ const ApplicationDetails = () => {
                         applicants
                             // Apply filter logic based on the selected filters
                             .filter(applicant => {
-                                const { tech, experience, salary } = filters;
+                                const { tech, experience } = selectedFIlters;
                                 return (!tech || tech.length === 0 || tech.includes(applicant.techStack.toLowerCase())) &&
-                                    (!experience || experience.length === 0 || experience.includes(applicant.experience.toLowerCase())) &&
-                                    (!salary || salary.length === 0 || salary.includes(applicant.expectedSalary.toLowerCase()));
+                                    (!experience || experience.length === 0 || experience.includes(applicant.experience))
                             })
                             .map((applicant, index) => (
                                 <li key={index}>
