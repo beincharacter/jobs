@@ -7,17 +7,22 @@
     gap: 10px;
 
     .filters {
-        div > label {
-            padding: 1rem;
-            background: lightblue;
-            margin-right: 5px;
-
-            input {
-                display: none;
+        .filter-label {
+          display: flex;
+          cursor: pointer;
+          background-color: lightblue;
+          transition: background-color 0.3s;
+      
+          input[type="checkbox"] {
+            display: none;
+      
+            &:checked + .filter-text {
+              background-color: #4caf50;
+              color: white;
             }
+          }
         }
-
-
-    }
+      }
+      
     
 }

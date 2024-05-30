@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import "../scss/Application.scss";
 import { useNavigate } from 'react-router-dom';
 import { useOrganization } from '../utils/OrganizationContext';
 import FirebaseService from '../utils/firebaseService';
@@ -20,7 +19,6 @@ const Application = () => {
     const handleSave = async () => {
         try {
             if (!title || !experience || !salaryRange || !location || !description) {
-                // setError('Please fill out all fields.');
                 toast.info("Please fill out all fields");
                 return;
             }
@@ -45,40 +43,67 @@ const Application = () => {
     };
 
     return (
-        <div className="application-page">
-            <h1>Create New Job Opening</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <input
-                type="text"
-                placeholder="Title of Application"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Experience Required"
-                value={experience}
-                onChange={(e) => setExperience(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Salary Range"
-                value={salaryRange}
-                onChange={(e) => setSalaryRange(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-            />jhyhh
-            <ReactQuill
-                value={description}
-                onChange={setDescription}
-                placeholder="Description about Application"
-                className='asas'
-            />
-            <button onClick={handleSave}>Save Application</button>
+        <div className="flex flex-col h-screen">
+            <span className='flex items-center w-full h-12 p-4 bg-lime-200'>Create New Job Opening</span>
+            <div className='flex flex-1 overflow-hidden'>
+                <div className='flex flex-col justify-start gap-4 items-center bg-lime-100 w-1/2 p-4 overflow-auto '>
+                    <div className='flex flex-col justify-center gap-4 items-center bg-lime-100 w-full p-4 overflow-auto content-center'>
+
+                        <input
+                            className="w-full p-2 border-b rounded"
+                            type="text"
+                            placeholder="Title of Application"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <input
+                            className="w-full p-2 border rounded"
+                            type="number"
+                            placeholder="Experience Required"
+                            value={experience}
+                            onChange={(e) => setExperience(e.target.value)}
+                            min={0}
+                            max={20}
+                        />
+                        <input
+                            className="w-full p-2 border rounded"
+                            type="number"
+                            placeholder="Salary Range"
+                            value={salaryRange}
+                            onChange={(e) => setSalaryRange(e.target.value)}
+                        />
+                        <input
+                            className="w-full p-2 border rounded"
+                            type="text"
+                            placeholder="Location"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                        />
+                    </div>
+
+                    {/* <button
+                        className='h-12 bg-blue-500 text-white p-4 flex justify-center items-center'
+                        onClick={handleSave}
+                    >
+                        Save Application
+                    </button> */}
+                </div>
+                <div className="flex flex-col w-1/2">
+                    <ReactQuill
+                        value={description}
+                        onChange={setDescription}
+                        placeholder="Description about Application"
+                        className='flex-1'
+                    />
+                </div>
+
+                <button
+                    className='h-16 bg-blue-500 text-white fixed bottom-4 right-4'
+                    onClick={handleSave}
+                >
+                    Save Application
+                </button>
+            </div>
         </div>
     );
 };

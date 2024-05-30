@@ -17,7 +17,7 @@ const App = () => {
         <Router>
             <OrganizationProvider>
                 <HeaderWrapper />
-                <Toaster /> {/* Add the Toaster component here */}
+                <Toaster />
                 <MainContent />
             </OrganizationProvider>
         </Router>
