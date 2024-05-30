@@ -92,11 +92,11 @@ const ApplicationDetails = () => {
             <div className='filters'>
                 {/* Render tech filters */}
                 {filters && filters.techFilters && (
-                    <div>
-                        <h3>Tech Stack</h3>
+                    <div className='flex gap-4 mb-4'>
                         {filters.techFilters.map((tech, index) => (
-                            <label key={index}>
+                            <label key={index} className='flex cursor-pointer p-4 bg-lightblue'>
                                 <input
+                                    className='none checked-red'
                                     type="checkbox"
                                     name="tech"
                                     value={tech}
@@ -110,8 +110,7 @@ const ApplicationDetails = () => {
 
                 {/* Render experience filters */}
                 {filters && filters.experienceFilters && (
-                    <div>
-                        <h3>Experience</h3>
+                    <div className='flex gap-4'>
                         {filters.experienceFilters.map((experience, index) => (
                             <label key={index}>
                                 <input
