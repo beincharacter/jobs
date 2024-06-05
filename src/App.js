@@ -10,7 +10,8 @@ import ApplicationDetails from './pages/ApplicationDetails.js';
 import ApplicantArea from './pages/ApplicantArea.js';
 import { Header } from './components/Header.js';
 import { ColorRing } from 'react-loader-spinner';
-import { Toaster } from './components/Toaster'; // Import the Toaster component
+import { Toaster } from './components/Toaster';
+import { Login } from './pages/Login.js';
 
 const App = () => {
     return (
@@ -48,8 +49,8 @@ const MainContent = () => {
 
             </div>}
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/register" element={<OrganizationRegistration />} />
+                <Route path="/" Component={Login} />
+                <Route path="/register" Component={OrganizationRegistration} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path='/create-application' element={<Application />} />
                 <Route path="/application-details/:openingId" element={<ApplicationDetails />} />

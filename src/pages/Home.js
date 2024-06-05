@@ -38,6 +38,7 @@ export const Home = () => {
         };
     
         checkExistingOrganization();
+        setLoading(false);
     })
 
     const handleLogin = async () => {
