@@ -99,14 +99,16 @@ ul {
         padding: 1rem;
         flex-direction: column;
         display: flex;
-        background-color: blanchedalmond;
+        // background-color: blanchedalmond;
         // width: 100%;
+        border: 1px solid yellow;
+        // background: #FFFF82;
         cursor: pointer;
         border-radius: 8px;
 
 
         &:hover {
-            background-color: rgb(207, 156, 80);
+            // background-color: rgb(207, 156, 80);
         }
 
     }
