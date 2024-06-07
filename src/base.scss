@@ -1,9 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+    font-family: "Roboto Condensed"', 'sans-serif;
 }
+
+
+.hover {
+    --c: #1095c1;
+    --s: .15em;
+
+    line-height: 1.1em;
+    background:
+      linear-gradient(rgb(6, 100, 163) 0 0) 0/var(--_p, 0%) padding-box no-repeat;
+    transition: .5s;
+  }
+
+  .hover:hover {
+    --_p: 100%;
+    color: white;
+  }
 
 body { background-image: radial-gradient(circle, #051937, #001e2e, #001e20, #101c17, #191a17);  
 }
