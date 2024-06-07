@@ -12,6 +12,7 @@ import { Header } from './components/Header.js';
 import { ColorRing } from 'react-loader-spinner';
 import { Toaster } from './components/Toaster';
 import { Login } from './pages/Login.js';
+import AboutUs from './pages/AboutUs.js';
 
 const App = () => {
     return (
@@ -55,6 +56,7 @@ const MainContent = () => {
                 <Route path='/create-application' element={<Application />} />
                 <Route path="/application-details/:openingId" element={<ApplicationDetails />} />
                 <Route path="/application/:id" element={<ApplicantArea />} />
+                <Route path='/about' Component={AboutUs} />
             </Routes>
         </>
     );
