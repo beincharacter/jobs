@@ -63,7 +63,7 @@ export const Login = () => {
                     </div>
                 </header>
 
-                <div className="flex w-9/12 h-[600px] min-h-[600px] border border-[#63484828] text-white p-4 rounded-lg bg-blue-300"
+                <div className="flex w-9/12 h-[600px] min-h-[600px] border border-[#63484828] text-white p-4 rounded-lg"
                     ref={cardRef}
                 >
                     <span></span>
