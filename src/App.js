@@ -13,6 +13,7 @@ import { ColorRing } from 'react-loader-spinner';
 import { Toaster } from './components/Toaster';
 import { Login } from './pages/Login.js';
 import AboutUs from './pages/AboutUs.js';
+import { Footer } from './components/Footer.js';
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
                 <HeaderWrapper />
                 <Toaster />
                 <MainContent />
+                {/* <Footer /> */}
             </OrganizationProvider>
         </Router>
     );

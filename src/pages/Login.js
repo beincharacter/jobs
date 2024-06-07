@@ -5,6 +5,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import { Footer } from "../components/Footer";
 
 export const Login = () => {
     const cardRef = useRef(null);
@@ -182,6 +183,7 @@ export const Login = () => {
                     <p className="text-center max-w-4xl mb-4">Have questions or need assistance? Our team is here to help! Reach out to us at [email address] or fill out the contact form below. We look forward to hearing from you and assisting you in your journey with [Platform Name].</p>
                 </section>
 
+                <Footer />
             </div>
         </>
     );
