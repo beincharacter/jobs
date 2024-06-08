@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
+import { Leaderboard } from "@mui/icons-material";
 
 export const Login = () => {
     const cardRef = useRef(null);
@@ -41,7 +42,11 @@ export const Login = () => {
                 observer.current.disconnect();
             }
         };
-    }, []);// Dummy data for testimonials
+    }, []);
+
+    let ORG_NAME = process.env.REACT_APP_ORG_NAME;
+    
+    // Dummy data for testimonials
     const testimonials = [
         {
             id: 1,
@@ -129,7 +134,7 @@ export const Login = () => {
                 {/* About Us Section */}
                 <section className="flex flex-col items-center w-full p-8 bg-gray-100 text-black">
                     <h2 className="text-3xl font-semibold mb-4 text-center">Empowering Connections, Elevating Careers</h2>
-                    <p className="text-center max-w-4xl">Welcome to [Platform Name], the premier hiring and collaboration platform designed to bridge the gap between companies and top-tier talent. Our mission is to streamline the hiring process while fostering a community where professionals can connect, share insights, and grow together. Whether you're looking to fill a position or find your dream job, [Platform Name] is your go-to destination for career success.</p>
+                    <p className="text-center max-w-4xl">Welcome to {ORG_NAME}, the premier hiring and collaboration platform designed to bridge the gap between companies and top-tier talent. Our mission is to streamline the hiring process while fostering a community where professionals can connect, share insights, and grow together. Whether you're looking to fill a position or find your dream job, {ORG_NAME} is your go-to destination for career success.</p>
                 </section>
 
                 {/* How It Works Section */}
@@ -180,7 +185,7 @@ export const Login = () => {
                 {/* Contact Us Section */}
                 <section className="flex flex-col items-center w-full p-8 bg-gray-100 text-black">
                     <h2 className="text-3xl font-semibold mb-4 text-center">Get in Touch</h2>
-                    <p className="text-center max-w-4xl mb-4">Have questions or need assistance? Our team is here to help! Reach out to us at [email address] or fill out the contact form below. We look forward to hearing from you and assisting you in your journey with [Platform Name].</p>
+                    <p className="text-center max-w-4xl mb-4">Have questions or need assistance? Our team is here to help! Reach out to us at [email address] or fill out the contact form below. We look forward to hearing from you and assisting you in your journey with {ORG_NAME}.</p>
                 </section>
 
                 <Footer />

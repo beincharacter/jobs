@@ -3,6 +3,8 @@ import { Container, Grid, Typography, Link, IconButton, Box } from '@mui/materia
 import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 
 export const Footer = () => {
+    let ORG_NAME = process.env.REACT_APP_ORG_NAME;
+
     return (
         <Box sx={{ backgroundColor: 'primary.dark', color: 'white', py: 6, width: '100%' }}>
             <Container maxWidth="lg">
@@ -62,7 +64,7 @@ export const Footer = () => {
                     </Grid>
                 </Grid>
                 <Box mt={4} textAlign="center">
-                    <Typography variant="body2">&copy; {new Date().getFullYear()} [Company Name]. All rights reserved.</Typography>
+                    <Typography variant="body2">&copy; {new Date().getFullYear()} {ORG_NAME}. All rights reserved.</Typography>
                 </Box>
             </Container>
         </Box>
