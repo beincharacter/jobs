@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Leaderboard } from "@mui/icons-material";
+import MoveToTop from "../components/MoveToTop";
 
 export const Login = () => {
     const cardRef = useRef(null);
@@ -129,6 +130,10 @@ export const Login = () => {
                 <div className="flex w-full h-[600px] bg-[#FFFF82] min-h-[600px] text-black p-4 flex-col items-center justify-center" ref={cardRef}>
                     <h1 className="text-4xl font-bold mb-4 text-center">Connect. Collaborate. Conquer Your Career</h1>
                     <p className="text-lg text-center max-w-2xl">Where opportunities meet ambition. Post jobs, showcase your skills, and collaborate for success.</p>
+                    <div className="flex gap-4 w-fit">
+                        <button className="p-4 border border-black rounded-full hover">Hire a Talent</button>
+                        <button className="p-4 border border-black rounded-full hover">Apply as a Talent</button>
+                    </div>
                 </div>
 
                 {/* About Us Section */}
@@ -190,6 +195,7 @@ export const Login = () => {
 
                 <Footer />
             </div>
+            <MoveToTop />
         </>
     );
 };

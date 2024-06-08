@@ -14,7 +14,7 @@
 
     line-height: 1.1em;
     background:
-        linear-gradient(#13C4A3 0 0) 0/var(--_p, 0%) padding-box no-repeat;
+        linear-gradient(black 0 0) 0/var(--_p, 0%) padding-box no-repeat;
     transition: .5s;
 }
 
@@ -58,21 +58,21 @@ textarea {
     max-width: calc(100% - 2rem);
 }
 
-button {
-    padding: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: lightblue;
-    font-size: 16px;
-    border: none;
-    outline: none;
+// button {
+//     padding: 1rem;
+//     border-radius: 8px;
+//     cursor: pointer;
+//     background-color: lightblue;
+//     font-size: 16px;
+//     border: none;
+//     outline: none;
 
 
-    &:hover {
-        background-color: rgb(109, 187, 212);
-    }
+//     &:hover {
+//         background-color: rgb(109, 187, 212);
+//     }
 
-}
+// }
 
 @media screen and (max-width: 400px) {
     input {
