@@ -2,7 +2,6 @@ import React from 'react';
 import "./base.scss";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { OrganizationProvider, useOrganization } from './utils/OrganizationContext';
-import Home from './pages/Home.js';
 import OrganizationRegistration from './pages/OrganizationRegistration';
 import Dashboard from './pages/Dashboard';
 import Application from './pages/Application.js';
@@ -11,9 +10,10 @@ import ApplicantArea from './pages/ApplicantArea.js';
 import { Header } from './components/Header.js';
 import { ColorRing } from 'react-loader-spinner';
 import { Toaster } from './components/Toaster';
-import { Login } from './pages/Login.js';
 import AboutUs from './pages/AboutUs.js';
 import { Footer } from './components/Footer.js';
+import { Login } from './pages/Login.js';
+import { Home } from './pages/Home.js';
 
 const App = () => {
     return (
@@ -52,7 +52,8 @@ const MainContent = () => {
 
             </div>}
             <Routes>
-                <Route path="/" Component={Login} />
+                <Route path="/" Component={Home} />
+                <Route path="/login" Component={Login} />
                 <Route path="/register" Component={OrganizationRegistration} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path='/create-application' element={<Application />} />
