@@ -1,52 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Slider from "react-slick";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
-import { Leaderboard } from "@mui/icons-material";
 import MoveToTop from "../components/MoveToTop";
 
 export const Home = () => {
-    const cardRef = useRef(null);
-    const observer = useRef(null);
-    const [isVisible, setIsVisible] = useState(true);
-    const prevIsVisible = useRef(isVisible);
-
-    useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: "0px",
-            threshold: 1.0,
-        };
-
-        const callback = (entries) => {
-            entries.forEach(entry => {
-                const currentIsVisible = entry.isIntersecting;
-                if (prevIsVisible.current !== currentIsVisible) {
-                    setIsVisible(currentIsVisible);
-                    prevIsVisible.current = currentIsVisible;
-                }
-            });
-        };
-
-        observer.current = new IntersectionObserver(callback, options);
-
-        if (cardRef.current) {
-            observer.current.observe(cardRef.current);
-        }
-
-        return () => {
-            if (observer.current) {
-                observer.current.disconnect();
-            }
-        };
-    }, []);
-
     let ORG_NAME = process.env.REACT_APP_ORG_NAME;
-    
+
     // Dummy data for testimonials
     const testimonials = [
         {
@@ -63,7 +25,6 @@ export const Home = () => {
             avatar: "https://via.placeholder.com/64",
             comment: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         },
-        // Add more testimonials as needed
     ];
 
     // Settings for react-slick carousel
@@ -93,41 +54,14 @@ export const Home = () => {
         ],
     };
 
-    // Dummy data for images next to "For Companies" and "For Candidates"
     const companyImage = "https://via.placeholder.com/200x200";
     const candidateImage = "https://via.placeholder.com/200x200";
-
 
     return (
         <>
             <div className="relative flex flex-col items-center w-screen h-screen overflow-y-auto custom-scrollbar">
-                {/* On scroll header */}
-                <header className={`fixed top-0 right-0 flex space-x-8 text-lg rounded-full border border-[#00000028] p-4 mt-4 transition-transform duration-500 w-fit left-1/2 -translate-x-1/2 bg-[#FFFF82] text-black ${isVisible ? '-translate-y-52' : 'translate-y-0'}`}>
-                    <nav className="cursor-pointer hover">Home</nav>
-                    <nav className="cursor-pointer hover">Jobs</nav>
-                    <nav className="cursor-pointer hover">About</nav>
-                    <nav className="cursor-pointer hover">Contacts</nav>
-                </header>
-
-                {/* On load header */}
-                <header className="flex justify-between items-center p-4 w-full bg-[#FFFF82] text-black">
-                    <div className="flex items-center">
-                        <img src="https://via.placeholder.com/32" alt="Logo" className="h-8 w-8 mr-2" />
-                    </div>
-                    <div className="flex space-x-8 text-lg rounded-full border border-[#ffffff28] p-4">
-                        <nav className="cursor-pointer hover">Home</nav>
-                        <nav className="cursor-pointer hover">Jobs</nav>
-                        {/* <nav className="cursor-pointer hover">About</nav> */}
-                        <Link to="/about" className="cursor-pointer hover">About</Link>
-                        <nav className="cursor-pointer hover">Contacts</nav>
-                    </div>
-                    <div className="flex items-center">
-                        <FontAwesomeIcon icon={faUser} className="h-8 w-8 mr-2" />
-                    </div>
-                </header>
-
                 {/* Hero Header Section */}
-                <div className="flex w-full h-[600px] bg-[#FFFF82] min-h-[600px] text-black p-4 flex-col items-center justify-center" ref={cardRef}>
+                <div className="flex w-full h-[600px] bg-[#FFFF82] min-h-[600px] text-black p-4 flex-col items-center justify-center">
                     <h1 className="text-4xl font-bold mb-4 text-center">Connect. Collaborate. Conquer Your Career</h1>
                     <p className="text-lg text-center max-w-2xl">Where opportunities meet ambition. Post jobs, showcase your skills, and collaborate for success.</p>
                     <div className="flex gap-4 w-fit">
@@ -154,9 +88,9 @@ export const Home = () => {
                                 <span>For Companies</span>
                             </div>
                             <ul className="list-disc list-inside text-center md:text-left">
-                                <li>Post Jobs Easily: Create detailed job postings to attract the right talent                                </li>
-                                <li>Visualize Applicant Data: Access insightful data visualizations to make informed hiring decisions.</li>
-                                <li>Engage with Talent: Communicate directly with candidates and streamline your hiring process.</li>
+                                <li className="w-max">Post Jobs Easily: Create detailed job postings to attract the right talent</li>
+                                <li className="w-max">Visualize Applicant Data: Access insightful data visualizations to make informed hiring decisions.</li>
+                                <li className="w-max">Engage with Talent: Communicate directly with candidates and streamline your hiring process.</li>
                             </ul>
                         </div>
                         <div className="flex flex-row-reverse w-full">
@@ -165,9 +99,9 @@ export const Home = () => {
                                 <span>For Candidates</span>
                             </div>
                             <ul className="list-disc list-inside text-center md:text-left w-full">
-                                <li>Showcase Your Skills: Create a profile that highlights your experience and expertise.</li>
-                                <li>Engage and Collaborate: Share posts, insights, and collaborate with industry professionals.</li>
-                                <li>Find Your Fit: Explore job opportunities and connect with companies that align with your career goals.</li>
+                                <li className="w-max">Showcase Your Skills: Create a profile that highlights your experience and expertise.</li>
+                                <li className="w-max">Engage and Collaborate: Share posts, insights, and collaborate with industry professionals.</li>
+                                <li className="w-max">Find Your Fit: Explore job opportunities and connect with companies that align with your career goals.</li>
                             </ul>
                         </div>
                     </div>
@@ -201,4 +135,3 @@ export const Home = () => {
         </>
     );
 };
-

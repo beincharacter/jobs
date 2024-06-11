@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Application from './pages/Application.js';
 import ApplicationDetails from './pages/ApplicationDetails.js';
 import ApplicantArea from './pages/ApplicantArea.js';
-import { Header } from './components/Header.js';
+import Header from './components/Header.js';
 import { ColorRing } from 'react-loader-spinner';
 import { Toaster } from './components/Toaster';
 import AboutUs from './pages/AboutUs.js';
@@ -22,7 +22,6 @@ const App = () => {
                 <HeaderWrapper />
                 <Toaster />
                 <MainContent />
-                {/* <Footer /> */}
             </OrganizationProvider>
         </Router>
     );
@@ -30,9 +29,13 @@ const App = () => {
 
 const HeaderWrapper = () => {
     const location = useLocation();
-    const shouldShowHeader = location.pathname !== '/' && location.pathname !== '/register';
+    const shouldShowHeader = true
 
-    return shouldShowHeader ? <Header /> : null;
+    return (
+        <>
+            {shouldShowHeader ? <Header /> : null}
+        </>
+    );
 };
 
 const MainContent = () => {
@@ -49,16 +52,15 @@ const MainContent = () => {
                 wrapperClass="color-ring-wrapper"
                 colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
             />
-
             </div>}
             <Routes>
                 <Route path="/" Component={Home} />
                 <Route path="/login" Component={Login} />
                 <Route path="/register" Component={OrganizationRegistration} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path='/create-application' element={<Application />} />
-                <Route path="/application-details/:openingId" element={<ApplicationDetails />} />
-                <Route path="/application/:id" element={<ApplicantArea />} />
+                <Route path="/dashboard" Component={Dashboard} />
+                <Route path='/create-application' Component={Application} />
+                <Route path="/application-details/:openingId" Component={ApplicationDetails} />
+                <Route path="/application/:id" Component={ApplicantArea} />
                 <Route path='/about' Component={AboutUs} />
             </Routes>
         </>

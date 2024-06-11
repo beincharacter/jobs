@@ -18,6 +18,16 @@
     transition: .5s;
 }
 
+.hover-yellow {
+    --c: #1095c1;
+    --s: .15em;
+
+    line-height: 1.1em;
+    background:
+        linear-gradient(rgb(175, 190, 38) 0 0) 0/var(--_p, 0%) padding-box no-repeat;
+    transition: .5s;
+}
+
 .hover:hover {
     --_p: 100%;
     color: white;
@@ -91,7 +101,7 @@ ul {
     flex-wrap: wrap;
     list-style: none;
     display: flex;
-    gap: 10px;
+    // gap: 10px;
     width: 100%;
     // max-width: 450px;
 
@@ -99,10 +109,6 @@ ul {
         padding: 1rem;
         flex-direction: column;
         display: flex;
-        // background-color: blanchedalmond;
-        // width: 100%;
-        border: 1px solid yellow;
-        // background: #FFFF82;
         cursor: pointer;
         border-radius: 8px;
 

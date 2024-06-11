@@ -14,7 +14,8 @@ const OrganizationRegistration = () => {
     useEffect(() => {
         const checkExistingOrganization = async () => {
             setLoading(true);
-            const email = localStorage.getItem("userEmail");
+            if(!localStorage.getItem("user")) return;
+            const {email, name, profilePicture} = JSON.parse(localStorage.getItem("user"));
     
             if (!email) {
                 console.error("No user email found.");
