@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../scss/Home.scss";
 import { auth, provider, signInWithPopup } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FirebaseService from "../utils/firebaseService";
 import { useOrganization } from "../utils/OrganizationContext";
 import { toast } from "react-toastify";
@@ -184,9 +184,9 @@ export const Login = () => {
       </button>
       <div className="text-center mt-4">
         Don't have an account?{" "}
-        <a href="/register" className="text-blue-500 hover:underline">
+        <Link to="/register" className="text-blue-500 hover:underline">
           Register here
-        </a>
+        </Link>
       </div>
     </div>
   );
