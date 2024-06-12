@@ -7,6 +7,10 @@
     font-family: 'Inter', sans-serif;
 }
 
+#root {
+    width: 100vw;
+    height: 100vh;
+}
 
 .hover {
     --c: #1095c1;
@@ -31,10 +35,6 @@
 .hover:hover {
     --_p: 100%;
     color: white;
-}
-
-body {
-    // background-image: radial-gradient(circle, #051937, #001e2e, #001e20, #101c17, #191a17);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
