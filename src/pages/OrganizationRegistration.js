@@ -4,9 +4,9 @@ import bcrypt from 'bcryptjs';
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import PhoneInput from 'react-phone-number-input';
+import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence from Framer Motion
 
 import 'react-phone-number-input/style.css';
-
 
 const Registration = () => {
     const [formData, setFormData] = useState({
@@ -26,14 +26,40 @@ const Registration = () => {
         selectedSectors: []
     });
 
-    const sectorsList = ["Technology", "Finance", "Healthcare", "Education", "Hospitality", "Manufacturing", "Retail", "Transportation", "Other"];
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const steps = [
+        { name: "Email", field: "email" },
+        { name: "Phone", field: "phone" },
+        { name: "Password", field: "password" },
+        { name: "Organization Name", field: "organization_name" },
+        { name: "Organization Logo", field: "organization_logo" },
+        { name: "Sector", field: "sector" },
+        { name: "Street", field: "address.street" },
+        { name: "City", field: "address.city" },
+        { name: "State", field: "address.state" },
+        { name: "Postal Code", field: "address.postal_code" },
+        { name: "Country", field: "address.country" }
+    ];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+
+        if (name.includes('address.')) {
+            const addressField = name.split('.')[1];
+            setFormData((prevData) => ({
+                ...prevData,
+                address: {
+                    ...prevData.address,
+                    [addressField]: value,
+                },
+            }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }));
+        }
     };
 
     const handlePhoneChange = (value) => {
@@ -43,237 +69,81 @@ const Registration = () => {
         });
     };
 
-    const handleSectorSelect = (sector) => {
-        if (!formData.selectedSectors.includes(sector)) {
-            setFormData({
-                ...formData,
-                selectedSectors: [...formData.selectedSectors, sector],
-                sector: ""
-            });
+    const handleNext = () => {
+        if (currentStep < steps.length - 1) {
+            setCurrentStep(currentStep + 1);
         }
     };
 
-    const handleSectorRemove = (sectorToRemove) => {
-        setFormData({
-            ...formData,
-            selectedSectors: formData.selectedSectors.filter(sector => sector !== sectorToRemove)
-        });
+    const handlePrevious = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
     };
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        try {
-            const { email, password, ...userData } = formData;
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            const idToken = await user.getIdToken();
-            localStorage.setItem('jwtToken', idToken);
-
-            await setDoc(doc(firestore, "users", user.uid), {
-                email: email,
-                password: hashedPassword,
-                ...userData
-            });
-        } catch (error) {
-            console.error("Error registering:", error);
-        }
+    const variants = {
+        enter: (direction) => ({
+            x: direction > 0 ? 1000 : -1000,
+            opacity: 0
+        }),
+        center: {
+            x: 0,
+            opacity: 1
+        },
+        exit: (direction) => ({
+            x: direction < 0 ? 1000 : -1000,
+            opacity: 0
+        })
     };
 
     return (
-        <>
-            <div className="flex flex-wrap content-start w-full h-full overflow-auto p-4">
-                <h3 className="w-full pb-4">Register here</h3>
-                <section className="flex w-full h-full">
-                    <div className="mb-4">
-                        <label htmlFor="email" className="flex text-gray-700 font-bold mb-2">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Email"
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="phone" className="flex text-gray-700 font-bold mb-2">Phone</label>
-                        <PhoneInput
-                            international
-                            defaultCountry="IN"
-                            id="phone"
-                            name="phone"
-                            placeholder="Enter phone number"
-                            value={formData.phone}
-                            onChange={handlePhoneChange}
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            required
-                        />
-                    </div>
-
-
-                    <div className="mb-4">
-                        <label htmlFor="password" className="flex text-gray-700 font-bold mb-2">password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="password"
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-
-                    <div className="mb-4">
-                        <label htmlFor="organization_name" className="flex text-gray-700 font-bold mb-2">organization name</label>
-                        <input
-                            id="organization_name"
-                            name="organization_name"
-                            placeholder="organization name"
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-
-                    <div className="mb-4">
-                        <label htmlFor="organization_logo" className="flex text-gray-700 font-bold mb-2">organization logo</label>
-                        <input
-                            type="file"
-                            id="organization_logo"
-                            name="organization_logo"
-                            placeholder="organization logo"
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="sector" className="flex text-gray-700 font-bold mb-2">Sector</label>
-                        <input
-                            id="sector"
-                            name="sector"
-                            placeholder="Type and select sectors"
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={formData.sector}
-                            onChange={handleChange}
-                        />
-                        <div className="mt-2">
-                            {formData.selectedSectors.map((sector, index) => (
-                                <div key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                                    {sector}
-                                    <button onClick={() => handleSectorRemove(sector)} className="ml-2 focus:outline-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M10 19a9 9 0 100-18 9 9 0 000 18zm-3.707-7.293a1 1 0 00-1.414 1.414L8.586 10l-3.707 3.707a1 1 0 101.414 1.414L10 11.414l3.707 3.707a1 1 0 001.414-1.414L11.414 10l3.707-3.707a1 1 0 00-1.414-1.414L10 8.586 6.293 4.879a1 1 0 00-1.414 1.414L8.586 10 4.879 13.707z" clipRule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="mt-2">
-                            {formData.sector &&
-
-                                sectorsList
-                                    .filter(sector => sector.toLowerCase().includes(formData.sector.toLowerCase()))
-                                    .map((sector, index) => (
-                                        <div
-                                            key={index}
-                                            className="cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-1 text-sm text-gray-700"
-                                            onClick={() => handleSectorSelect(sector)}
-                                        >
-                                            {sector}
-                                        </div>
-                                    ))}
-                        </div>
-                    </div>
-
-                    <div className="mb-4"><div className="mb-4">
-                        <label htmlFor="street" className="flex text-gray-700 font-bold mb-2">Street</label>
-                        <input
-                            type="text"
-                            id="street"
-                            name="street"
-                            placeholder="Street"
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            value={formData.address.street}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-
-                        <div className="mb-4">
-                            <label htmlFor="city" className="flex text-gray-700 font-bold mb-2">City</label>
-                            <input
-                                type="text"
-                                id="city"
-                                name="city"
-                                placeholder="City"
+        <div className="flex flex-col justify-center items-center w-full h-screen">
+            <h3 className="pb-4">Register here</h3>
+            <AnimatePresence initial={false} custom={currentStep}>
+                <motion.section
+                    key={currentStep}
+                    custom={currentStep}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    className="flex flex-col items-center w-full max-w-md"
+                >
+                    <div className="mb-4 w-full">
+                        <label htmlFor={steps[currentStep].field} className="flex text-gray-700 font-bold mb-2">{steps[currentStep].name}</label>
+                        {steps[currentStep].field === "phone" ? (
+                            <PhoneInput
+                                international
+                                defaultCountry="IN"
+                                id={steps[currentStep].field}
+                                name={steps[currentStep].field}
+                                placeholder={`Enter ${steps[currentStep].name}`}
+                                value={formData[steps[currentStep].field]}
+                                onChange={handlePhoneChange}
                                 className="w-full p-2 border border-gray-300 rounded-lg"
-                                value={formData.address.city}
+                                required
+                            />
+                        ) : (
+                            <input
+                                type={steps[currentStep].field === "password" ? "password" : "text"}
+                                id={steps[currentStep].field}
+                                name={steps[currentStep].field}
+                                placeholder={`Enter ${steps[currentStep].name}`}
+                                className="w-full p-2 border border-gray-300 rounded-lg"
+                                value={steps[currentStep].field.includes('address.') ? formData.address[steps[currentStep].field.split('.')[1]] : formData[steps[currentStep].field]}
                                 onChange={handleChange}
                                 required
                             />
-                        </div>
-
-                        <div className="mb-4">
-                            <label htmlFor="state" className="flex text-gray-700 font-bold mb-2">State</label>
-                            <input
-                                type="text"
-                                id="state"
-                                name="state"
-                                placeholder="State"
-                                className="w-full p-2 border border-gray-300 rounded-lg"
-                                value={formData.address.state}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-
-                        <div className="mb-4">
-                            <label htmlFor="postal_code" className="flex text-gray-700 font-bold mb-2">Postal Code</label>
-                            <input
-                                type="text"
-                                id="postal_code"
-                                name="postal_code"
-                                placeholder="Postal Code"
-                                className="w-full p-2 border border-gray-300 rounded-lg"
-                                value={formData.address.postal_code}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-
-                        <div className="mb-4">
-                            <label htmlFor="country" className="flex text-gray-700 font-bold mb-2">Country</label>
-                            <input
-                                type="text"
-                                id="country"
-                                name="country"
-                                placeholder="Country"
-                                className="w-full p-2 border border-gray-300 rounded-lg"
-                                value={formData.address.country}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-
+                        )}
                     </div>
-
-
-
-                </section>
-            </div>
-        </>
+                    <div className="mb-4 flex justify-between w-full">
+                        <button onClick={handlePrevious} disabled={currentStep === 0} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Back</button>
+                        <button onClick={handleNext} disabled={currentStep === steps.length - 1} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Next</button>
+                    </div>
+                </motion.section>
+            </AnimatePresence>
+        </div>
     );
 };
 
