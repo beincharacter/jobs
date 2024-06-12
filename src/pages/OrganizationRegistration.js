@@ -27,6 +27,7 @@ const Registration = () => {
     });
 
     const [currentStep, setCurrentStep] = useState(0);
+    const [direction, setDirection] = useState(0);
 
     const steps = [
         { name: "Email", field: "email" },
@@ -71,12 +72,14 @@ const Registration = () => {
 
     const handleNext = () => {
         if (currentStep < steps.length - 1) {
+            setDirection(1);
             setCurrentStep(currentStep + 1);
         }
     };
 
     const handlePrevious = () => {
         if (currentStep > 0) {
+            setDirection(-1);
             setCurrentStep(currentStep - 1);
         }
     };
@@ -98,17 +101,17 @@ const Registration = () => {
 
     return (
         <div className="flex flex-col justify-center items-center w-full h-screen">
-            <h3 className="pb-4">Register here</h3>
-            <AnimatePresence initial={false} custom={currentStep}>
+            {/* <h3 className="pb-4">Register here</h3> */}
+            <AnimatePresence initial={false} custom={direction}>
                 <motion.section
                     key={currentStep}
-                    custom={currentStep}
+                    custom={direction}
                     variants={variants}
                     initial="enter"
                     animate="center"
                     exit="exit"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="flex flex-col items-center w-full max-w-md"
+                    className="flex flex-col items-center w-full max-w-md absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
                 >
                     <div className="mb-4 w-full">
                         <label htmlFor={steps[currentStep].field} className="flex text-gray-700 font-bold mb-2">{steps[currentStep].name}</label>
