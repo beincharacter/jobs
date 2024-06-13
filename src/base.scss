@@ -10,6 +10,7 @@
 #root {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 
 .hover {
@@ -35,6 +36,12 @@
 .hover:hover {
     --_p: 100%;
     color: white;
+}
+
+#root > div.flex.flex-col.justify-center.items-center.w-full.h-screen.overflow-hidden > section {
+    
+    transform: revert-layer;
+
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

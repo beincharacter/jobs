@@ -4,8 +4,7 @@ import bcrypt from 'bcryptjs';
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import PhoneInput from 'react-phone-number-input';
-import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence from Framer Motion
-
+import { motion, AnimatePresence } from "framer-motion";
 import 'react-phone-number-input/style.css';
 
 const Registration = () => {
@@ -100,8 +99,7 @@ const Registration = () => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center w-full h-screen">
-            {/* <h3 className="pb-4">Register here</h3> */}
+        <div className="flex flex-col justify-center items-center w-full h-screen overflow-hidden">
             <AnimatePresence initial={false} custom={direction}>
                 <motion.section
                     key={currentStep}
@@ -111,8 +109,20 @@ const Registration = () => {
                     animate="center"
                     exit="exit"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="flex flex-col items-center w-full max-w-md absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                    className="flex flex-row items-center w-full max-w-md absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
                 >
+
+                    <button onClick={handlePrevious} disabled={currentStep === 0} className={`p-2 ${currentStep === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+                        <svg
+                            className={`w-6 h-6 ${currentStep === 0 ? 'text-gray-400' : 'text-blue-500 hover:text-blue-700'}`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
                     <div className="mb-4 w-full">
                         <label htmlFor={steps[currentStep].field} className="flex text-gray-700 font-bold mb-2">{steps[currentStep].name}</label>
                         {steps[currentStep].field === "phone" ? (
@@ -140,10 +150,17 @@ const Registration = () => {
                             />
                         )}
                     </div>
-                    <div className="mb-4 flex justify-between w-full">
-                        <button onClick={handlePrevious} disabled={currentStep === 0} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Back</button>
-                        <button onClick={handleNext} disabled={currentStep === steps.length - 1} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Next</button>
-                    </div>
+                    <button onClick={handleNext} disabled={currentStep === steps.length - 1} className={`p-2 ${currentStep === steps.length - 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+                        <svg
+                            className={`w-6 h-6 ${currentStep === steps.length - 1 ? 'text-gray-400' : 'text-blue-500 hover:text-blue-700'}`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
                 </motion.section>
             </AnimatePresence>
         </div>
